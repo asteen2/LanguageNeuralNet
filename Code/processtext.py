@@ -3,6 +3,10 @@ import numpy as np
 from pathlib import Path
 
 def ProcessText(FilePath):
+    """
+    input:
+    output:
+    """
     file = open(FilePath, "r")
     string = file.read().upper()
     file.close()
