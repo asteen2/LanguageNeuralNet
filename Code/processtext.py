@@ -5,7 +5,7 @@ from pathlib import Path
 def ProcessText(FilePath):
     """
     input:
-    output:
+    output: 
     """
     file = open(FilePath, "r")
     string = file.read().upper()
