@@ -5,26 +5,13 @@ from pathlib import Path
 def ProcessText(FilePath):
     """
     input:
-    output: 
+    output:
     """
     file = open(FilePath, "r")
     string = file.read().upper()
     file.close()
     pattern = re.compile(r"[^A-Z\u00C0-\u00DF]")
     return(re.sub(pattern, "", string))
-
-# assign numbers to the languages
-# LangDict = {0:"English", 1:"German", 2:"Spanish"}
-
-# split the text files into sections
-# MinLength = 20
-# MaxLength = 50
-# EnglishString = ProcessText("/Users/Aidia/Documents/SummerResearch2020/LanguageNeuralNet/Data/EnglishText.txt")
-# MaxPosition = len(EnglishString)
-# StringLength = np.random.randint(MinLength, MaxLength)
-# Start = np.random.randint(MaxPosition-(StringLength+1))
-# End = Start + StringLength
-# print(f"String length = {StringLength}\nStart position = {Start}\nEnd position = {End}\n{EnglishString[Start:End]}")
 
 def MakeSection(ProcessedText, MinLength = 20, MaxLength = 50):
     """
@@ -40,8 +27,6 @@ def MakeSection(ProcessedText, MinLength = 20, MaxLength = 50):
     Start = np.random.randint(MaxPosition-(StringLength+1))
     End = Start + StringLength
     return(ProcessedText[Start:End])
-
-# make function to turn langauge into number
 
 def MakeTupleList(ProcessedText, LanguageIndex, NumSections = 500):
     """
