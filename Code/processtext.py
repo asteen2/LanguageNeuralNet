@@ -1,6 +1,7 @@
 import re
 import numpy as np
 from pathlib import Path
+import csv
 
 def ProcessText(FilePath):
     """
@@ -69,6 +70,8 @@ def MakeCSV(TupleList):
     """
     input:
     output:
+
+    temporary function to write the tuple list into a csv
     """
     BaseFilePath = Path("/Users/Aidia/Documents/SummerResearch2020/LanguageNeuralNet/Data/")
     langs = ["English", "German", "Spanish"]
@@ -77,6 +80,10 @@ def MakeCSV(TupleList):
             FileName = f"{lang}Text.txt"
             FilePath = BaseFilePath / FileName
             MasterList.extend(TxtToTupleList(FilePath, lang))
+    LangCSVFile = open("../Data/MasterList.csv", "w+")
+    with LangCSVFile:
+        write = csv.writer(LangCSVFile)
+        write.writerows(MasterList)
     return(MasterList)
 
 if __name__ == "__main__":
