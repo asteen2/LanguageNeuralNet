@@ -4,6 +4,8 @@ from keras.layers import Dense
 import pandas as pd
 import splitstring
 
-FileName = "../Data/MasterList.csv"
+FileName = "/Users/Aidia/Documents/SummerResearch2020/LanguageNeuralNet/Data/MasterList.csv"
 X = splitstring.LetArrayToNumArray(splitstring.CSVToNumpy(FileName))
 Y = splitstring.GetLanguageIndex(FileName)
+
+dataset = loadtxt(FileName, delimiter = ",")
