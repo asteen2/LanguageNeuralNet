@@ -1,16 +1,9 @@
 from numpy import loadtxt
-#from keras.models import Sequential
-#from keras.layers import Dense
+from keras.models import Sequential
+from keras.layers import Dense
 import pandas as pd
+import splitstring
 
-InputFileName = '../Data/MasterList.csv'
-
-DF = pd.read_csv(InputFileName, names = ["String", "LanguageIndex"])
-print(DF)
-DF = DF.String.str.split('',expand=True)
-print(DF)
-
-X = DF.iloc[:, 1:-1].to_numpy()
-#DF
-
-print(X)
+FileName = "../Data/MasterList.csv"
+X = splitstring.LetArrayToNumArray(splitstring.CSVToNumpy(FileName))
+Y = splitstring.GetLanguageIndex(FileName)
