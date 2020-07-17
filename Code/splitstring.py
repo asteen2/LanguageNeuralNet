@@ -37,6 +37,7 @@ def CSVToNumpy(CSVFileName):
 def GetLanguageIndex(CSVFileName):
     """
     input: CSV file with values: letter string, language index
+
     output: one-dimensional numpy DataFrame of the language index values from
         the input file
     """
@@ -50,8 +51,11 @@ def GetLanguageIndex(CSVFileName):
 
 def MakeDict(NpArray, ToLetter = False):
     """
-    input:
-    output:
+    input: numpy array (typically of the individual letters in a string).
+        Typically the output of CSVToNumpy().
+
+    output: dictionary that matches each unique letter/character in the input
+        array (key) to an integer (value)
     """
     UnqLetters = np.unique(NpArray)
     NumToLetDict = dict(enumerate(UnqLetters))
@@ -64,8 +68,13 @@ def MakeDict(NpArray, ToLetter = False):
 
 def LetArrayToNumArray(NpLetArray):
     """
-    input:
-    output:
+    converts array of letters to array of corresponding numbers
+
+    input: numpy array of the individual letters in a string. Typically the
+        output of CSVToNumpy().
+
+    output: numpy array of the numbers that correspond to the letters in the
+        input array, according to the letter/number dictionary from MakeDict()
     """
     LetToNumDict = MakeDict(NpLetArray)
     ArrayShape = NpLetArray.shape
@@ -73,4 +82,4 @@ def LetArrayToNumArray(NpLetArray):
     return(Output.reshape(ArrayShape))
 
 # write another function, opposite of LetArrayToNumArray(): Number array to
-# number array
+# letter array
