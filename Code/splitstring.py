@@ -17,14 +17,33 @@ import pandas as pd
 
 
 def CSVToNumpy(CSVFileName):
+    """
+
+    """
     DF = pd.read_csv(CSVFileName, names = ["String", "LanguageIndex"])
-    #print(DF)
+    # print(DF)
     SplitDF = DF.String.str.split('',expand=True)
-    #print(SplitDF)
+    # print(SplitDF)
     NumpyArray = SplitDF.iloc[:, 1:-1].to_numpy()
     return(NumpyArray)
 
+
+def GetLanguageIndex(CSVFileName):
+    """
+
+    """
+    DF = pd.read_csv(CSVFileName, names = ["String", "LanguageIndex"])
+    # print(DF)
+    # SplitDF = DF.String.str.split('',expand=True)
+    #print(SplitDF)
+    # NumpyArray = SplitDF.iloc[:, 1:-1].to_numpy()
+    return(DF.LanguageIndex.to_numpy())
+
+
 def MakeDict(NpArray, ToLetter = False):
+    """
+
+    """
     UnqLetters = np.unique(NpArray)
     NumToLetDict = dict(enumerate(UnqLetters))
     LetToNumDict = {value: key for key, value in NumToLetDict.items()}
@@ -33,7 +52,11 @@ def MakeDict(NpArray, ToLetter = False):
     else:
         return(LetToNumDict)
 
+
 def LetArrayToNumArray(NpLetArray):
+    """
+
+    """
     LetToNumDict = MakeDict(NpLetArray)
     ArrayShape = NpLetArray.shape
     Output = np.array([LetToNumDict[Let] for Let in NpLetArray.flatten()])
