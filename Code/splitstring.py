@@ -23,11 +23,11 @@ def CSVToNumpy(CSVFileName):
     """
     # create pandas DataFrame from input CSV, columns "String" & "LanguageIndex"
     DF = pd.read_csv(CSVFileName, names = ["String", "LanguageIndex"])
-    print(DF)
+    # print(DF)
     # ignore DF's 2nd column. Take DF's 1st column, split the string into
     # individual letters, and turn them into a DataFrame
     SplitDF = DF.String.str.split('',expand=True)
-    print(SplitDF)
+    # print(SplitDF)
     # turn SplitDF into a numpy array, removing the empty first and last columns
     # (they're created when you split)
     NumpyArray = SplitDF.iloc[:, 1:-1].to_numpy()

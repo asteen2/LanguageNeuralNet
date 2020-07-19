@@ -94,7 +94,7 @@ if __name__ == "__main__":
     for lang in langs:
             FileName = f"{lang}Text.txt"
             FilePath = BaseFilePath / FileName
-            print(TxtToTupleList(FilePath, lang))
+            # print(TxtToTupleList(FilePath, lang))
 
 
     # ProcessedText = ProcessText(FilePath)
