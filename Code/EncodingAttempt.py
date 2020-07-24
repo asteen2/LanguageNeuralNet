@@ -19,13 +19,15 @@ X = dataset[:, 1:]
 Y = dataset[:, 0]
 
 X = X.astype('str')
-#Y = Y.reshape(-1,1)
+Y = Y.astype('int8')
 
 X_train, X_test, Y_train, Y_test = \
     train_test_split(X, Y, test_size=0.33, random_state=1)
 
-print(Y_train)
-print(type(Y_train))
+#print("X_train: ", X_train)
+
+#print(Y_train)
+#print(type(Y_train))
 
 # Need to one-hot encode the input values; either use sklearn OneHotEncoder
 # or something like enumerate(np.unique(X_train))
@@ -59,12 +61,12 @@ def PrepareOutputs(Y_train, Y_test):
 X_train_enc, X_test_enc = PrepareInputs(X_train, X_test)
 Y_train_enc, Y_test_enc = PrepareOutputs(Y_train, Y_test)
 
-# model = Sequential()
-# model.add(Dense(10, input_dim=X_train_enc.shape[1], activation='relu',
-#                         kernel_initializer = "he_normal"))
-# model.add(Dense(10, activation='relu'))
-# model.add(Dense(1, activation="softmax"))
-#
-# model.compile(loss='sparse_categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
-# print(X_train_enc)
-# model.fit(X_train_enc, Y_train_enc, epochs=50, batch_size=10, verbose=2)
+model = Sequential()
+model.add(Dense(10, input_dim=X_train_enc.shape[1], activation='relu',
+                        kernel_initializer = "he_normal"))
+model.add(Dense(10, activation='relu'))
+model.add(Dense(3, activation="softmax"))
+
+model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
+print(X_train_enc)
+model.fit(X_train_enc, Y_train_enc, epochs=50, batch_size=10, verbose=2)
