@@ -70,3 +70,14 @@ model.add(Dense(3, activation="softmax"))
 model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
 print(X_train_enc)
 model.fit(X_train_enc, Y_train_enc, epochs=50, batch_size=10, verbose=2)
+
+accuracy = model.evaluate(X_test_enc, Y_test_enc, verbose=0)
+print(f"Accuracy: {accuracy}")
+print(f"Model metrics: {model.metrics_names}")
+
+
+Y_Predictions = model.predict_classes(X_test_enc)
+print(f"Model's Y predictions: {Y_Predictions}")
+print(f"Actual Ys: {Y_test}")
+
+# How to compare model's predictions to actual Y_test?
