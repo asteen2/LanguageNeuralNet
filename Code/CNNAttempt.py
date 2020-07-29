@@ -5,8 +5,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelBinarizer
 from keras.models import Sequential
-# should Conv1D and MaxPooling1D actually be 2D?
-from keras.layers import Dense, Dropout, Flatten, Conv1D, MaxPooling1D
+# should Conv and MaxPooling be 1D or 2D?
+from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 
 data = pd.read_csv("../Data/MasterList.csv", names=['fullString', 'langID'])
 data = data.join(data.fullString.str.split("", expand=True))
@@ -60,8 +60,19 @@ def PrepareOutputs(Y_train, Y_test):
 X_train_enc, X_test_enc = PrepareInputs(X_train, X_test)
 Y_train_enc, Y_test_enc = PrepareOutputs(Y_train, Y_test)
 
+#X_test.shape = (495, 20)
 model = Sequential()
-model.add(Conv1D(32, kernel_size=3, activation="relu",))
+model.add(Conv2D(32, kernel_size=3, activation="relu", input_shape=(495, 20))
+# says the following line has invalid syntax (carrot points to "l" in "model")
+model.add(MaxPooling2D(pool_size=5, 5))
+model.add(Dense(3, activation="softmax"))
+
+model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
+model.fit(X_train_enc, Y_train_enc, epochs=50, batch_size=10, verbose=2)
+
+accuracy = model.evaluate(X_test_enc, Y_test_enc, verbose=0)
+print(f"Accuracy: {accuracy}")
+print(f"Model metrics: {model.metrics_names}")
 
 
 # model.add(Dense(10, input_dim=X_train_enc.shape[1], activation='relu',
