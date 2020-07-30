@@ -5,8 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelBinarizer
 from keras.models import Sequential
-# should Conv and MaxPooling be 1D or 2D?
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+from keras.layers import Dense, Dropout, Flatten, Conv1D, MaxPooling1D
 
 data = pd.read_csv("../Data/MasterList.csv", names=['fullString', 'langID'])
 data = data.join(data.fullString.str.split("", expand=True))
@@ -62,9 +61,15 @@ Y_train_enc, Y_test_enc = PrepareOutputs(Y_train, Y_test)
 
 #X_test.shape = (495, 20)
 model = Sequential()
-model.add(Conv2D(32, kernel_size=3, activation="relu", input_shape=(495, 20))
-# says the following line has invalid syntax (carrot points to "l" in "model")
-model.add(MaxPooling2D(pool_size=5, 5))
+# Conv1D arguments:
+    # filter = 18, bc we think filter = num of "steps" the convolution takes
+        # filter = [(length input array) - (length kernel) + (length of one element of kernel)]/stride length
+        # 18 = (700 - 105 + 35)/35
+    # kernel_size = 35 (1 encoded letter) * 3, because we want groups of 3 letters
+    # strides = we want the convolution to move letter by letter
+model.add(Conv1D(18, kernel_size=105, strides=35, activation="relu", input_shape=(700, 35)))
+# error from following line: Negative dimension size caused by subtracting 35 from 18
+model.add(MaxPooling1D(pool_size=35))
 model.add(Dense(3, activation="softmax"))
 
 model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
